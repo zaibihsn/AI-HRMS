@@ -9,6 +9,13 @@ import Employees from "@/pages/Employees";
 import Claims from "@/pages/Claims";
 import Tickets from "@/pages/Tickets";
 import Reports from "@/pages/Reports";
+import Settings from "@/pages/Settings";
+import EmployeeProfile from "@/pages/EmployeeProfile";
+import OrganizationChart from "@/pages/OrganizationChart";
+import Recruitment from "@/pages/Recruitment";
+import Payroll from "@/pages/Payroll";
+import Performance from "@/pages/Performance";
+import Attendance from "@/pages/Attendance";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import ChatWidget from "@/components/chat/ChatWidget";
@@ -23,9 +30,16 @@ function Router() {
           <Switch>
             <Route path="/" component={Dashboard} />
             <Route path="/employees" component={Employees} />
+            <Route path="/employee/:id" component={EmployeeProfile} />
+            <Route path="/organization-chart" component={OrganizationChart} />
+            <Route path="/recruitment" component={Recruitment} />
             <Route path="/claims" component={Claims} />
             <Route path="/tickets" component={Tickets} />
+            <Route path="/payroll" component={Payroll} />
+            <Route path="/performance" component={Performance} />
+            <Route path="/attendance" component={Attendance} />
             <Route path="/reports" component={Reports} />
+            <Route path="/settings" component={Settings} />
             <Route component={NotFound} />
           </Switch>
         </main>

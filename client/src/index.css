@@ -13,7 +13,7 @@
   --card-foreground: hsl(20, 14.3%, 4.1%);
   --border: hsl(20, 5.9%, 90%);
   --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(142, 76%, 36%);
+  --primary: hsl(188, 94%, 35%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(60, 4.8%, 95.9%);
   --secondary-foreground: hsl(24, 9.8%, 10%);
@@ -21,18 +21,18 @@
   --accent-foreground: hsl(24, 9.8%, 10%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
+  --ring: hsl(188, 94%, 35%);
   --radius: 0.5rem;
   
-  /* MapleHR specific colors */
-  --maple-primary: hsl(142, 76%, 36%);
-  --maple-secondary: hsl(158, 64%, 52%);
-  --maple-accent: hsl(160, 84%, 39%);
-  --maple-success: hsl(142, 76%, 36%);
-  --maple-warning: hsl(45, 93%, 47%);
-  --maple-error: hsl(0, 84.2%, 60.2%);
-  --maple-sidebar: hsl(0, 0%, 100%);
-  --maple-sidebar-active: hsl(142, 68%, 92%);
+  /* AI HRMS specific colors */
+  --hrms-primary: hsl(188, 94%, 35%);
+  --hrms-secondary: hsl(196, 71%, 48%);
+  --hrms-accent: hsl(184, 81%, 44%);
+  --hrms-success: hsl(142, 76%, 36%);
+  --hrms-warning: hsl(45, 93%, 47%);
+  --hrms-error: hsl(0, 84.2%, 60.2%);
+  --hrms-sidebar: hsl(0, 0%, 100%);
+  --hrms-sidebar-active: hsl(188, 94%, 92%);
 }
 
 .dark {
@@ -46,7 +46,7 @@
   --card-foreground: hsl(0, 0%, 98%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(142, 76%, 36%);
+  --primary: hsl(188, 94%, 35%);
   --primary-foreground: hsl(0, 0%, 100%);
   --secondary: hsl(240, 3.7%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -70,9 +70,17 @@
 
 @layer components {
   .sidebar-active {
-    @apply bg-green-100 text-green-700 font-medium;
+    @apply bg-cyan-100 text-cyan-700 font-medium;
   }
   
+  .hrms-gradient {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-600 text-white;
+  }
+  
+  .hrms-gradient:hover {
+    @apply from-cyan-600 to-blue-700;
+  }
+
   .status-badge {
     @apply px-2 py-1 rounded-full text-xs font-medium;
   }

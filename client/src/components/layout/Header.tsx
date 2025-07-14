@@ -17,8 +17,28 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
     subtitle: "Autonomous HR management and insights"
   },
   "/employees": {
-    title: "Employee Management",
+    title: "Employees",
     subtitle: "Manage your workforce with AI-powered insights"
+  },
+  "/organization-chart": {
+    title: "Organization Chart",
+    subtitle: "Visualize company structure and hierarchy"
+  },
+  "/recruitment": {
+    title: "Recruitment",
+    subtitle: "AI-powered talent acquisition and hiring"
+  },
+  "/performance": {
+    title: "Performance Management",
+    subtitle: "Track goals, reviews, and employee development"
+  },
+  "/attendance": {
+    title: "Attendance Management",
+    subtitle: "Track employee attendance and working hours"
+  },
+  "/payroll": {
+    title: "Payroll Management",
+    subtitle: "Automated payroll processing and tax calculations"
   },
   "/claims": {
     title: "Claims & Expenses",
@@ -29,8 +49,12 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
     subtitle: "Intelligent ticket routing and resolution"
   },
   "/reports": {
-    title: "AI Analytics",
+    title: "Reports & Analytics",
     subtitle: "Advanced workforce analytics and predictions"
+  },
+  "/settings": {
+    title: "Settings",
+    subtitle: "Configure your AI HRMS system"
   },
 };
 
@@ -39,8 +63,8 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   
   const pageInfo = pageTitles[location] || {
-    title: "MapleHR",
-    subtitle: "AI-powered HR management"
+    title: "AI HRMS",
+    subtitle: "Autonomous HR management system"
   };
 
   return (

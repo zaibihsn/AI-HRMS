@@ -1,8 +1,8 @@
-# MapleHR - AI-Powered HR Management System
+# AI HRMS - Autonomous HR Management System
 
 ## Overview
 
-MapleHR is a modern, AI-powered human resources management system built with a full-stack TypeScript architecture. The application provides comprehensive HR functionality including employee management, claims processing, ticket handling, and intelligent chat assistance powered by OpenAI's GPT-4o model.
+AI HRMS is a comprehensive, autonomous human resources management system built with a full-stack TypeScript architecture. The application provides complete HR functionality to fully replace traditional HR departments, including employee lifecycle management, recruitment, payroll, performance tracking, attendance monitoring, and intelligent chat assistance powered by OpenAI's GPT-4o model.
 
 ## User Preferences
 
@@ -14,7 +14,7 @@ Preferred communication style: Simple, everyday language.
 - **Framework**: React 18 with TypeScript
 - **Routing**: Wouter for client-side routing
 - **UI Framework**: Radix UI with shadcn/ui components
-- **Styling**: Tailwind CSS with custom MapleHR theme
+- **Styling**: Tailwind CSS with cyan-blue AI HRMS theme
 - **State Management**: TanStack Query (React Query) for server state
 - **Build Tool**: Vite with custom configuration
 
@@ -33,6 +33,19 @@ Preferred communication style: Simple, everyday language.
 - `/migrations` - Database migration files
 
 ## Key Components
+
+### HR Modules
+- **Dashboard**: AI-powered analytics and insights overview
+- **Employee Management**: Complete employee lifecycle and profiles
+- **Organization Chart**: Visual hierarchy and department structure
+- **Recruitment**: AI-driven talent acquisition and hiring pipeline
+- **Performance Management**: Goal tracking and employee evaluations
+- **Attendance Tracking**: Time and attendance monitoring with AI insights
+- **Payroll Processing**: Automated payroll calculations and tax management
+- **Claims & Expenses**: AI-powered expense approval workflow
+- **Support Tickets**: Intelligent ticket routing and resolution
+- **Reports & Analytics**: Advanced workforce analytics and predictions
+- **Settings**: System configuration and AI parameters
 
 ### Database Schema
 - **Users**: Authentication and basic user information

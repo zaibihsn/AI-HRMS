@@ -66,7 +66,7 @@ export default function Employees() {
             <BarChart3 className="w-4 h-4 mr-2" />
             Organization Chart
           </Button>
-          <Button className="maple-gradient">
+          <Button className="hrms-gradient">
             <Plus className="w-4 h-4 mr-2" />
             Create User
           </Button>
@@ -181,7 +181,7 @@ export default function Employees() {
                 }
               </p>
               {!searchQuery && (
-                <Button className="maple-gradient">
+                <Button className="hrms-gradient">
                   <Plus className="w-4 h-4 mr-2" />
                   Add First Employee
                 </Button>

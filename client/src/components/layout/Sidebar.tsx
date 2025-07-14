@@ -12,23 +12,24 @@ import {
   BarChart3, 
   Shield, 
   Settings,
-  Leaf
+  Brain,
+  Building2,
+  Clock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigationItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/employees", label: "Employees", icon: Users, badge: "247" },
-  { href: "/recruitment", label: "AI Recruitment", icon: UserPlus },
-  { href: "/onboarding", label: "Smart Onboarding", icon: Rocket },
-  { href: "/performance", label: "Performance AI", icon: TrendingUp },
-  { href: "/leave", label: "Leave Management", icon: Calendar },
-  { href: "/payroll", label: "Smart Payroll", icon: DollarSign },
+  { href: "/employees", label: "Employees", icon: Users },
+  { href: "/organization-chart", label: "Organization Chart", icon: Building2 },
+  { href: "/recruitment", label: "Recruitment", icon: UserPlus },
+  { href: "/performance", label: "Performance", icon: TrendingUp },
+  { href: "/attendance", label: "Attendance", icon: Clock },
+  { href: "/payroll", label: "Payroll", icon: DollarSign },
   { href: "/claims", label: "Claims & Expenses", icon: Receipt },
   { href: "/tickets", label: "Support Tickets", icon: Ticket },
-  { href: "/reports", label: "AI Analytics", icon: BarChart3 },
-  { href: "/compliance", label: "Compliance Hub", icon: Shield },
-  { href: "/settings", label: "AI Settings", icon: Settings },
+  { href: "/reports", label: "Reports & Analytics", icon: BarChart3 },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -39,12 +40,12 @@ export default function Sidebar() {
       {/* Logo Section */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <Leaf className="w-4 h-4 text-white" />
+          <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
+            <Brain className="w-4 h-4 text-white" />
           </div>
-          <span className="text-xl font-bold text-gray-800">MapleHR</span>
+          <span className="text-xl font-bold text-gray-800">AI HRMS</span>
         </div>
-        <p className="text-xs text-gray-500 mt-1">AI-Powered HR System</p>
+        <p className="text-xs text-gray-500 mt-1">Autonomous HR Management</p>
       </div>
 
       {/* Navigation */}
