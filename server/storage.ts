@@ -436,7 +436,7 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(chatMessages)
       .where(eq(chatMessages.userId, userId))
-      .orderBy(desc(chatMessages.createdAt))
+      .orderBy(chatMessages.createdAt)
       .limit(limit);
   }
 

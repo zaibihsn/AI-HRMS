@@ -26,11 +26,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const total = await storage.getEmployeeCount();
-      
       res.json({ employees, total });
     } catch (error) {
       console.error("Error fetching employees:", error);
-      res.status(500).json({ message: "Failed to fetch employees" });
+      res.status(500).json({ message: "Failed to fetch employees", error: error instanceof Error ? error.message : error });
     }
   });
 
@@ -222,6 +221,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const limit = parseInt(req.query.limit as string) || 50;
       
       const messages = await storage.getChatHistory(userId, limit);
+      console.log("Chat history for", userId, messages);
       res.json(messages);
     } catch (error) {
       console.error("Error fetching chat history:", error);
@@ -231,25 +231,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/chat", async (req, res) => {
     try {
-      const { userId, message } = req.body;
-      
+      const { userId, message, groqApiKey } = req.body;
       // Save user message
-      await storage.saveChatMessage({
+      const userMsg = await storage.saveChatMessage({
         userId,
         message,
         isFromUser: true,
       });
-
-      // Get AI response
-      const aiResponse = await aiService.generateResponse(message, userId);
-      
+      // Pass groqApiKey to AI service if provided
+      const aiResponse = await aiService.generateResponse(message, userId, groqApiKey);
       // Save AI response
-      await storage.saveChatMessage({
+      const aiMsg = await storage.saveChatMessage({
         userId,
         message: aiResponse,
         isFromUser: false,
       });
-
+      console.log("Saved user message:", userMsg);
+      console.log("Saved AI message:", aiMsg);
       res.json({ response: aiResponse });
     } catch (error) {
       console.error("Error processing chat message:", error);

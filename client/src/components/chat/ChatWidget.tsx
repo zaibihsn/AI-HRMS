@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 interface ChatMessage {
   id: number;
@@ -27,6 +28,7 @@ const quickActions = [
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [localChat, setLocalChat] = useState<ChatMessage[]>([]);
   const { toast } = useToast();
 
   // Mock user ID - in real app this would come from auth
@@ -34,20 +36,33 @@ export default function ChatWidget() {
 
   const { data: chatHistory = [], refetch } = useQuery({
     queryKey: ["/api/chat/history", userId],
+    queryFn: async () => {
+      const res = await apiRequest("GET", `/api/chat/history/${userId}`);
+      return res.json();
+    },
     enabled: isOpen,
   });
 
+  // Sync localChat with chatHistory when chatHistory changes
+useEffect(() => {
+  // Only update localChat if chatHistory actually changed
+  setLocalChat(chatHistory as ChatMessage[]);
+  console.log("[ChatWidget] chatHistory:", chatHistory);
+}, [JSON.stringify(chatHistory)]);
+
   const sendMessageMutation = useMutation({
     mutationFn: async (messageText: string) => {
+      const groqApiKey = localStorage.getItem("groqApiKey") || "";
       const response = await apiRequest("POST", "/api/chat", {
         userId,
         message: messageText,
+        groqApiKey,
       });
       return response.json();
     },
     onSuccess: () => {
-      refetch();
       setMessage("");
+      refetch();
     },
     onError: (error) => {
       toast({
@@ -110,7 +125,7 @@ export default function ChatWidget() {
           <CardContent className="p-0 flex flex-col h-80">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {chatHistory.length === 0 && (
+              {localChat.length === 0 && (
                 <div className="flex items-start space-x-2">
                   <Avatar className="w-6 h-6 bg-gray-100 flex-shrink-0 mt-1">
                     <AvatarFallback className="text-gray-600 text-xs">
@@ -125,7 +140,7 @@ export default function ChatWidget() {
                 </div>
               )}
 
-              {chatHistory.map((msg: ChatMessage) => (
+              {localChat.map((msg: ChatMessage) => (
                 <div
                   key={msg.id}
                   className={cn(

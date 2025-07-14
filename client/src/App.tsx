@@ -19,14 +19,17 @@ import Attendance from "@/pages/Attendance";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import ChatWidget from "@/components/chat/ChatWidget";
+import Preferences from "@/pages/Preferences";
+import HelpSupport from "@/pages/HelpSupport";
+import SignOut from "@/pages/SignOut";
 
 function Router() {
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900 transition-colors">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-6 bg-white dark:bg-gray-900 transition-colors">
           <Switch>
             <Route path="/" component={Dashboard} />
             <Route path="/employees" component={Employees} />
@@ -40,6 +43,9 @@ function Router() {
             <Route path="/attendance" component={Attendance} />
             <Route path="/reports" component={Reports} />
             <Route path="/settings" component={Settings} />
+            <Route path="/preferences" component={Preferences} />
+            <Route path="/help" component={HelpSupport} />
+            <Route path="/signout" component={SignOut} />
             <Route component={NotFound} />
           </Switch>
         </main>

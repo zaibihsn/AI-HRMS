@@ -12,6 +12,8 @@ import {
   Brain
 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { useState, useEffect } from "react";
+import moment from "moment-timezone";
 
 interface DashboardStats {
   totalEmployees: number;
@@ -69,6 +71,28 @@ export default function Dashboard() {
     queryKey: ["/api/dashboard/stats"],
   });
 
+  // Get selected timezone from localStorage (set by manager/ceo/cto in Settings)
+  const [timezone, setTimezone] = useState<string>("UTC");
+  const [currentTime, setCurrentTime] = useState<string>("");
+
+  useEffect(() => {
+    const tz = localStorage.getItem("companyTimezone") || "UTC";
+    setTimezone(tz);
+    const updateTime = () => {
+      setCurrentTime(moment().tz(tz).format("dddd, MMMM D, YYYY h:mm:ss A"));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Get company name from localStorage
+  const [companyName, setCompanyName] = useState<string>("");
+  useEffect(() => {
+    const name = localStorage.getItem("companyName") || "AI HRMS Corp";
+    setCompanyName(name);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -92,9 +116,32 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors">
+      {/* Company Name Banner */}
+      <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 mb-2 transition-colors">
+        <CardContent className="p-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{companyName}</h1>
+            <p className="text-gray-500 dark:text-gray-400">Welcome to your HRMS dashboard</p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Company Timezone Banner */}
+      <Card className="bg-blue-50 dark:bg-blue-900 border-blue-200 dark:border-blue-700 transition-colors">
+        <CardContent className="p-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-bold text-blue-900 dark:text-blue-100">Company Timezone</h2>
+            <p className="text-blue-700 dark:text-blue-200">{timezone} &mdash; {currentTime}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <Clock className="w-6 h-6 text-blue-600 dark:text-blue-200" />
+          </div>
+        </CardContent>
+      </Card>
+
       {/* AI System Status Banner */}
-      <Card className="maple-gradient text-white">
+      <Card className="maple-gradient text-white dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-900 dark:text-white transition-colors">
         <CardContent className="p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -106,22 +153,21 @@ export default function Dashboard() {
               <div className="text-sm text-green-100">Active Employees</div>
             </div>
           </div>
-          
           <div className="grid grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold">12</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">12</div>
               <div className="text-xs text-green-100">Auto-Processed Today</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">98%</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">98%</div>
               <div className="text-xs text-green-100">Prediction Accuracy</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">5.2s</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">5.2s</div>
               <div className="text-xs text-green-100">Avg Response Time</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">0</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">0</div>
               <div className="text-xs text-green-100">Manual Interventions</div>
             </div>
           </div>
@@ -130,74 +176,74 @@ export default function Dashboard() {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Active Recruitments</p>
-                <p className="text-3xl font-bold text-gray-900">{stats?.activeRecruitments || 0}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Active Recruitments</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats?.activeRecruitments || 0}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <UserPlus className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                <UserPlus className="w-6 h-6 text-blue-600 dark:text-blue-200" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              <TrendingUp className="w-4 h-4 text-green-600 mr-1" />
-              <span className="text-green-600 text-sm font-medium">↑ 12%</span>
-              <span className="text-gray-500 text-sm ml-2">vs last month</span>
+              <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-300 mr-1" />
+              <span className="text-green-600 dark:text-green-300 text-sm font-medium">↑ 12%</span>
+              <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">vs last month</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending Reviews</p>
-                <p className="text-3xl font-bold text-gray-900">{stats?.pendingReviews || 0}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Pending Reviews</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats?.pendingReviews || 0}</p>
               </div>
-              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <Clock className="w-6 h-6 text-yellow-600" />
+              <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center">
+                <Clock className="w-6 h-6 text-yellow-600 dark:text-yellow-200" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              <span className="text-yellow-600 text-sm font-medium">Due this week</span>
+              <span className="text-yellow-600 dark:text-yellow-200 text-sm font-medium">Due this week</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Leave Requests</p>
-                <p className="text-3xl font-bold text-gray-900">{stats?.pendingLeaves || 0}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Leave Requests</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats?.pendingLeaves || 0}</p>
               </div>
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-purple-600" />
+              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                <Calendar className="w-6 h-6 text-purple-600 dark:text-purple-200" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              <span className="text-primary text-sm font-medium">Auto-approved: 19</span>
+              <span className="text-primary dark:text-purple-200 text-sm font-medium">Auto-approved: 19</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Cost Savings</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Cost Savings</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">
                   ${((stats?.costSavings || 0) / 1000).toFixed(0)}K
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-green-600 dark:text-green-200" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              <span className="text-green-600 text-sm font-medium">This quarter</span>
+              <span className="text-green-600 dark:text-green-200 text-sm font-medium">This quarter</span>
             </div>
           </CardContent>
         </Card>

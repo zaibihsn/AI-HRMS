@@ -158,7 +158,11 @@ export default function Employees() {
                   </div>
                   
                   <div className="mt-4 pt-4 border-t border-gray-100">
-                    <Button variant="outline" className="w-full text-primary border-primary hover:bg-primary hover:text-white">
+                    <Button
+                      variant="outline"
+                      className="w-full text-primary border-primary hover:bg-primary hover:text-white"
+                      onClick={() => window.location.href = `/employee/${employee.id}`}
+                    >
                       View Profile
                     </Button>
                   </div>

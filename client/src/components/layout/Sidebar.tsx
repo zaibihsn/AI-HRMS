@@ -36,16 +36,16 @@ export default function Sidebar() {
   const [location] = useLocation();
 
   return (
-    <div className="w-64 bg-white shadow-lg flex-shrink-0">
+    <div className="w-64 bg-white dark:bg-gray-900 shadow-lg flex-shrink-0 transition-colors">
       {/* Logo Section */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6 border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
             <Brain className="w-4 h-4 text-white" />
           </div>
-          <span className="text-xl font-bold text-gray-800">AI HRMS</span>
+          <span className="text-xl font-bold text-gray-800 dark:text-white">AI HRMS</span>
         </div>
-        <p className="text-xs text-gray-500 mt-1">Autonomous HR Management</p>
+        <p className="text-xs text-gray-500 dark:text-gray-300 mt-1">Autonomous HR Management</p>
       </div>
 
       {/* Navigation */}
@@ -61,8 +61,8 @@ export default function Sidebar() {
                   className={cn(
                     "flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                     isActive
-                      ? "sidebar-active"
-                      : "text-gray-600 hover:bg-gray-100"
+                      ? "sidebar-active dark:bg-gray-800 dark:text-white"
+                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   )}
                 >
                   <Icon className="w-5 h-5 mr-3" />

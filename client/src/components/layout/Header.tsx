@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Bell, Search, Settings } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Bell, Search, Settings, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -59,35 +59,62 @@ const pageTitles: Record<string, { title: string; subtitle: string }> = {
 };
 
 export default function Header() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [darkMode, setDarkMode] = useState(false);
+
   const pageInfo = pageTitles[location] || {
     title: "AI HRMS",
     subtitle: "Autonomous HR management system"
   };
 
+  const handleToggleTheme = () => {
+    setDarkMode((prev) => {
+      const next = !prev;
+      if (next) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+      return next;
+    });
+  };
+
+  // On mount, set theme from localStorage
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      setDarkMode(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      setDarkMode(false);
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+    <header className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 px-6 py-4 transition-colors">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{pageInfo.title}</h1>
-          <p className="text-sm text-gray-500">{pageInfo.subtitle}</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{pageInfo.title}</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-300">{pageInfo.subtitle}</p>
         </div>
         
         <div className="flex items-center space-x-4">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-64"
-            />
-          </div>
-
+          {/* Dark/Light Mode Toggle */}
+          <button
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+            onClick={handleToggleTheme}
+            className={`transition-colors rounded-full p-2 border ${darkMode ? "bg-gray-900 border-gray-700" : "bg-gray-100 border-gray-300"} flex items-center justify-center shadow hover:scale-105 duration-150`}
+          >
+            {darkMode ? (
+              <Sun className="w-5 h-5 text-yellow-400" />
+            ) : (
+              <Moon className="w-5 h-5 text-gray-700" />
+            )}
+          </button>
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -118,7 +145,7 @@ export default function Header() {
           </DropdownMenu>
 
           {/* Settings */}
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={() => setLocation('/settings')}>
             <Settings className="w-5 h-5" />
           </Button>
 
@@ -137,10 +164,10 @@ export default function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Profile Settings</DropdownMenuItem>
-              <DropdownMenuItem>Preferences</DropdownMenuItem>
-              <DropdownMenuItem>Help & Support</DropdownMenuItem>
-              <DropdownMenuItem className="text-red-600">Sign Out</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLocation('/settings')}>Profile Settings</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLocation('/preferences')}>Preferences</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setLocation('/help')}>Help & Support</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600" onClick={() => setLocation('/signout')}>Sign Out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
