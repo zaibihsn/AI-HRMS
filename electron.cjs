@@ -10,7 +10,8 @@ function createWindow() {
       contextIsolation: false,
     },
   });
-  win.loadFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+  win.loadFile(path.join(__dirname, 'client', 'index.html'));
+  win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
